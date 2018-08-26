@@ -6,7 +6,7 @@ Loosely based interpretation of the old and well-known state machine
 # Introduction
 This framework is an interpretation of UML state machine (https://en.wikipedia.org/wiki/UML_state_machine) and a finite automaton (https://en.wikipedia.org/wiki/Finite-state_machine).
 
-There main components of DDStateMachine:
+There are main components of DDStateMachine:
 * **StateMachineBuilder.** The state machine can be initialized just via StateMachineBuilder it provides a flexible interface for creating different sequences of states and relations between them.
 * **StateBuilder.** The framework doesn't give access to State but it still needs to create it for describing relations and its action (work).
 * **StateMachine.** After the creation of StateMachine, it gives just a possibility to send an event for changing its current state and observe current state changes.
