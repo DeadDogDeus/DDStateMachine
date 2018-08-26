@@ -4,7 +4,7 @@ Loosely based interpretation of the old and well-known state machine
 ![Abstract diagram](/Screenshots/Abstract%20diagram.png?raw=true)
 
 # Introduction
-This framework is an interpretation of UML state machine (https://en.wikipedia.org/wiki/UML_state_machine) and a finite automaton (https://en.wikipedia.org/wiki/Finite-state_machine).
+This framework is an interpretation of [UML state machine](https://en.wikipedia.org/wiki/UML_state_machine) and [a finite automaton](https://en.wikipedia.org/wiki/Finite-state_machine).
 
 There are main components of DDStateMachine:
 * **StateMachineBuilder.** The state machine can be initialized just via StateMachineBuilder it provides a flexible interface for creating different sequences of states and relations between them.
@@ -15,9 +15,110 @@ There are main components of DDStateMachine:
 * **Extra State.** Even the most simple systems have gazillions states which are hard for registering like independent states. In this case, we can use an extra state. It is a specific data class which can be attached to each state and be processing inside its work block.
 * **Result Conditions.** Not only events can toggle transitions if a state does some work we can register result condition. In this case, we can use the result of the work for making a decision:  run or not a particular transition.
 * **On Conditions.** We can register specific listeners on a particular state, they will be called when this state will be set, before running its work.
-* **If Conditions.** We can extend transitions which will be called by specific event using If Conditions. In this case, even if StateMachine will get needed event it will need success result of the "If Condition". 
+* **If Conditions.** We can extend transitions which will be called by specific event using If Conditions. In this case, even if StateMachine gets needed event it will need success result of the "If Condition".
+
+# Example
+
+Let's create a state machine for a synchronization process.
+Our synchronization process contains the following states:
+* **Not Synchronized**
+* **In Progress**
+* **Synchronized**
+* **Failed**
+
+In this case, the state machine will process just a one external event "sync", moreover for preventing frequent calls of the synchronization work we introduce 30 seconds cache lifetime before we can transit from Synced to In Progress.
+
+Here is a diagram:
 
 ![Synchronizaton diagram](/Screenshots/Synchronizaton%20diagram.svg)
+
+In code it will look like:
+
+**Data Structures**
+```swift
+enum SyncStatus: Int, Hashable {
+  case notSynced
+  case inProgress
+  case synced
+  case failed
+}
+
+enum SyncEvent {
+  case sync
+}
+
+class SyncExtraState {
+  var expiryDate: Date?
+}
+```
+
+**State machine properties**
+```swift
+  private var stateMachine: StateMachine<SyncStatus, SyncEvent>?
+
+  // This property will be used for observing
+  var currentStatus: Property<SyncStatus> {
+    return self.stateMachine!.currentStatus
+  }
+```
+**Describing state machine**
+```swift
+// Scheduler will be used for running states' works
+let builder = StateMachineBuilder<SyncStatus, SyncEvent, SyncExtraState>(scheduler: QueueScheduler())
+
+let notSynced: StateBuilder<SyncStatus, SyncEvent, SyncExtraState> = StateBuilder(.notSynced)
+let synced: StateBuilder<SyncStatus, SyncEvent, SyncExtraState> = StateBuilder(.synced)
+let failed: StateBuilder<SyncStatus, SyncEvent, SyncExtraState> = StateBuilder(.failed)
+
+// For describing states with "Work" we need to use a special type of StateBuilder - WorkStateBuilder.
+let inProgress: WorkStateBuilder<SyncStatus, SyncEvent, SyncExtraState, Bool> =
+  WorkStateBuilder(.inProgress, work: self.doSync)
+
+// If the state machine is in Not Synced state and gets the event "sync" 
+// it will transit to In Progress state immediately.
+builder.shouldTransit(notSynced ~> inProgress).by(event: .sync).immediately()
+
+// If the state machine is in In Progress state and In Progress work returns true 
+// the state machine will transit to Synced state immediately.
+builder.shouldTransit(inProgress ~> synced).ifResult { $0 }
+
+// If the state machine is in In Progress state and In Progress work returns false 
+// the state machine will transit to Failed state immediately.
+builder.shouldTransit(inProgress ~> failed).ifResult { !$0 }
+
+// If the state machine is set to Synced state
+// It sets SyncExtraState->expiryDate to now + 30 seconds.
+// If the state machine is in Synced state and gets the event "sync" and if cache has expired
+// then if all conditions fulfilled it will transit to In Progress state immediately.
+builder.shouldTransit(synced ~> inProgress)
+  .on { $0.expiryDate = Date() + 30.seconds }
+  .by(event: .sync)
+  .ifCondition { $0.expiryDate != nil && $0.expiryDate! < Date()
+}
+
+// If the state machine is in Failed state and gets the event "sync" 
+// it will transit to In Progress state immediately.
+builder.shouldTransit(failed ~> inProgress).by(event: .sync).immediately()
+
+// Create the state machine with initial state Not Synced
+self.stateMachine = builder.build(initialState: notSynced)
+```
+
+**Sync work method**
+```swift
+  func doSync() -> SignalProducer<Bool, NoError> {
+    // Write some sycnronization code
+  }
+```
+
+**Setting "Sync" event**
+```swift
+  func sync() {
+    self.stateMachine?.execute(event: .sync)
+  }
+```
+
+This example uses [SwiftDate](https://github.com/malcommac/SwiftDate) for working with dates and [ReactiveSwift](https://github.com/ReactiveCocoa/ReactiveSwift) for scheduling.
 
 ## Requirements
 
