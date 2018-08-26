@@ -21,11 +21,11 @@ TToState: StateBuilder<TStatus, TEvent, TExtraState> {
 public class StateBuilder<TStatus: Hashable, TEvent, TExtraState> {
   private let status: TStatus
 
-  init(_ status: TStatus) {
+  public init(_ status: TStatus) {
     self.status = status
   }
 
-  static func ~> (
+  public static func ~> (
     fromStateBuilder: StateBuilder<TStatus, TEvent, TExtraState>,
     toStateBuilder: StateBuilder<TStatus, TEvent, TExtraState>)
     -> StateDirection<
@@ -46,13 +46,13 @@ public class WorkStateBuilder<
 TWorkResult>: StateBuilder<TStatus, TEvent, TExtraState> {
   private var work: (()-> SignalProducer<TWorkResult, NoError>)
 
-  init(_ status: TStatus, work: @escaping ()-> SignalProducer<TWorkResult, NoError>) {
+  public init(_ status: TStatus, work: @escaping ()-> SignalProducer<TWorkResult, NoError>) {
     self.work = work
 
     super.init(status)
   }
 
-  static func ~> (
+  public static func ~> (
     fromStateBuilder: WorkStateBuilder<TStatus, TEvent, TExtraState, TWorkResult>,
     toStateBuilder: StateBuilder<TStatus, TEvent, TExtraState>)
     -> StateDirection<

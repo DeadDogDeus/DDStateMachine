@@ -9,15 +9,15 @@ import Foundation
 import ReactiveSwift
 
 public class StateMachine<TStatus: Hashable, TEvent> {
-  let currentStatus: Property<TStatus>
+  public let currentStatus: Property<TStatus>
   private let mutableCurrentStatus: MutableProperty<TStatus>
 
-  init(status: TStatus) {
+  public init(status: TStatus) {
     self.mutableCurrentStatus = MutableProperty(status)
     self.currentStatus = Property(self.mutableCurrentStatus)
   }
 
-  func execute(event: TEvent) {
+  public func execute(event: TEvent) {
     fatalError()
   }
 }

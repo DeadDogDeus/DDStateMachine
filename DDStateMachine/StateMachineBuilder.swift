@@ -10,22 +10,22 @@ import ReactiveSwift
 import Result
 
 public class ConditionBuilder<TStatus: Hashable, TEvent, TExtraState, TState: StateBuilder<TStatus, TEvent, TExtraState>> {
-  func immediately() {
+  public func immediately() {
     fatalError()
   }
 
-  func ifCondition(_ condition: @escaping (TExtraState) -> Bool) {
+  public func ifCondition(_ condition: @escaping (TExtraState) -> Bool) {
     fatalError()
   }
 }
 
 public class EventBuilder<TStatus: Hashable, TEvent, TExtraState, TState: StateBuilder<TStatus, TEvent, TExtraState>> {
-  func by(event: TEvent)
+  public func by(event: TEvent)
     -> ConditionBuilder<TStatus, TEvent, TExtraState, StateBuilder<TStatus, TEvent, TExtraState>> {
       fatalError()
   }
 
-  func on(_ editExtraState: @escaping (TExtraState) -> Void)
+  public func on(_ editExtraState: @escaping (TExtraState) -> Void)
     -> EventBuilder<TStatus, TEvent, TExtraState, TState> {
       fatalError()
   }
@@ -46,11 +46,11 @@ public class WorkEventBuilder<
 public class StateMachineBuilder<TStatus: Hashable, TEvent, TExtraState> {
   private let scheduler: Scheduler
 
-  init(scheduler: Scheduler) {
+  public init(scheduler: Scheduler) {
     self.scheduler = scheduler
   }
 
-  func shouldTransit(
+  public func shouldTransit(
     _ direction: StateDirection<
     TStatus,
     TEvent,
@@ -61,7 +61,7 @@ public class StateMachineBuilder<TStatus: Hashable, TEvent, TExtraState> {
       fatalError()
   }
 
-  func shouldTransit<TWorkResult>(
+  public func shouldTransit<TWorkResult>(
     _ direction: StateDirection<
     TStatus,
     TEvent,
@@ -77,7 +77,7 @@ public class StateMachineBuilder<TStatus: Hashable, TEvent, TExtraState> {
       fatalError()
   }
 
-  func build(initialState: StateBuilder<TStatus, TEvent, TExtraState>) -> StateMachine<TStatus, TEvent> {
+  public func build(initialState: StateBuilder<TStatus, TEvent, TExtraState>) -> StateMachine<TStatus, TEvent> {
     fatalError()
   }
 }
