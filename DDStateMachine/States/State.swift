@@ -11,7 +11,7 @@ import Result
 
 class State<TStatus: Hashable, TEvent: Equatable, TExtraState: ExtraStateProtocol> {
   let status: TStatus
-  internal let extraState: TExtraState
+  let extraState: TExtraState
   private let onConditions: [OnCondition<TExtraState>]
   private let ifConditions: [IfCondition<TStatus, TEvent, TExtraState>]
 

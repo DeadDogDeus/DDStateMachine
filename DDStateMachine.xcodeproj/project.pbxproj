@@ -30,6 +30,11 @@
 		AFC9A3ED213AD6B7008AE7A2 /* ResultCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9A3EC213AD6B7008AE7A2 /* ResultCondition.swift */; };
 		AFC9A3EE213AD70A008AE7A2 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF18DB302132E97B00AE214F /* ReactiveSwift.framework */; };
 		AFC9A3EF213AD714008AE7A2 /* Result.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF18DB322132E98C00AE214F /* Result.framework */; };
+		AFC9A3F5213ADD0F008AE7A2 /* StateBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9A3F4213ADD0F008AE7A2 /* StateBuilder.swift */; };
+		AFC9A3F7213ADD3F008AE7A2 /* WorkStateBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9A3F6213ADD3F008AE7A2 /* WorkStateBuilder.swift */; };
+		AFC9A3F9213ADD8B008AE7A2 /* ConditionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9A3F8213ADD8B008AE7A2 /* ConditionBuilder.swift */; };
+		AFC9A3FB213ADDD1008AE7A2 /* EventBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9A3FA213ADDD1008AE7A2 /* EventBuilder.swift */; };
+		AFC9A3FD213ADE13008AE7A2 /* WorkEventBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9A3FC213ADE13008AE7A2 /* WorkEventBuilder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +74,11 @@
 		AFC9A3E8213AD669008AE7A2 /* IfCondition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IfCondition.swift; sourceTree = "<group>"; };
 		AFC9A3EA213AD68F008AE7A2 /* OnCondition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnCondition.swift; sourceTree = "<group>"; };
 		AFC9A3EC213AD6B7008AE7A2 /* ResultCondition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultCondition.swift; sourceTree = "<group>"; };
+		AFC9A3F4213ADD0F008AE7A2 /* StateBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateBuilder.swift; sourceTree = "<group>"; };
+		AFC9A3F6213ADD3F008AE7A2 /* WorkStateBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkStateBuilder.swift; sourceTree = "<group>"; };
+		AFC9A3F8213ADD8B008AE7A2 /* ConditionBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionBuilder.swift; sourceTree = "<group>"; };
+		AFC9A3FA213ADDD1008AE7A2 /* EventBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventBuilder.swift; sourceTree = "<group>"; };
+		AFC9A3FC213ADE13008AE7A2 /* WorkEventBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkEventBuilder.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,19 +135,13 @@
 		AF18DB172132E59500AE214F /* DDStateMachine */ = {
 			isa = PBXGroup;
 			children = (
+				AFC9A3FF213ADE9A008AE7A2 /* Models */,
+				AFC9A3FE213ADE88008AE7A2 /* States */,
+				AFC9A3F3213ADCEC008AE7A2 /* Conditions */,
+				AFC9A3F2213ADCDE008AE7A2 /* Builders */,
 				AF18DB182132E59500AE214F /* DDStateMachine.h */,
 				AF18DB192132E59500AE214F /* Info.plist */,
-				AF18DB342132E9F900AE214F /* State.swift */,
-				AFC9A3DE213AD557008AE7A2 /* WorkState.swift */,
-				AF18DB362132EA3000AE214F /* StateMachineBuilder.swift */,
 				AF18DB382132EA8200AE214F /* StateMachine.swift */,
-				AFC9A3E0213AD5A1008AE7A2 /* ExtraStateProtocol.swift */,
-				AFC9A3E2213AD5DE008AE7A2 /* StateDirection.swift */,
-				AFC9A3E4213AD612008AE7A2 /* StateContainer.swift */,
-				AFC9A3E6213AD63D008AE7A2 /* WorkStateContainer.swift */,
-				AFC9A3E8213AD669008AE7A2 /* IfCondition.swift */,
-				AFC9A3EA213AD68F008AE7A2 /* OnCondition.swift */,
-				AFC9A3EC213AD6B7008AE7A2 /* ResultCondition.swift */,
 			);
 			path = DDStateMachine;
 			sourceTree = "<group>";
@@ -171,6 +175,49 @@
 				AF18DB4E2132EBA500AE214F /* Info.plist */,
 			);
 			path = DDStateMachineSample;
+			sourceTree = "<group>";
+		};
+		AFC9A3F2213ADCDE008AE7A2 /* Builders */ = {
+			isa = PBXGroup;
+			children = (
+				AF18DB362132EA3000AE214F /* StateMachineBuilder.swift */,
+				AFC9A3F4213ADD0F008AE7A2 /* StateBuilder.swift */,
+				AFC9A3F6213ADD3F008AE7A2 /* WorkStateBuilder.swift */,
+				AFC9A3F8213ADD8B008AE7A2 /* ConditionBuilder.swift */,
+				AFC9A3FA213ADDD1008AE7A2 /* EventBuilder.swift */,
+				AFC9A3FC213ADE13008AE7A2 /* WorkEventBuilder.swift */,
+			);
+			path = Builders;
+			sourceTree = "<group>";
+		};
+		AFC9A3F3213ADCEC008AE7A2 /* Conditions */ = {
+			isa = PBXGroup;
+			children = (
+				AFC9A3E8213AD669008AE7A2 /* IfCondition.swift */,
+				AFC9A3EA213AD68F008AE7A2 /* OnCondition.swift */,
+				AFC9A3EC213AD6B7008AE7A2 /* ResultCondition.swift */,
+			);
+			path = Conditions;
+			sourceTree = "<group>";
+		};
+		AFC9A3FE213ADE88008AE7A2 /* States */ = {
+			isa = PBXGroup;
+			children = (
+				AF18DB342132E9F900AE214F /* State.swift */,
+				AFC9A3DE213AD557008AE7A2 /* WorkState.swift */,
+			);
+			path = States;
+			sourceTree = "<group>";
+		};
+		AFC9A3FF213ADE9A008AE7A2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				AFC9A3E0213AD5A1008AE7A2 /* ExtraStateProtocol.swift */,
+				AFC9A3E2213AD5DE008AE7A2 /* StateDirection.swift */,
+				AFC9A3E4213AD612008AE7A2 /* StateContainer.swift */,
+				AFC9A3E6213AD63D008AE7A2 /* WorkStateContainer.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -351,14 +398,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				AFC9A3E9213AD669008AE7A2 /* IfCondition.swift in Sources */,
+				AFC9A3F5213ADD0F008AE7A2 /* StateBuilder.swift in Sources */,
 				AF18DB352132E9F900AE214F /* State.swift in Sources */,
 				AFC9A3EB213AD68F008AE7A2 /* OnCondition.swift in Sources */,
+				AFC9A3F7213ADD3F008AE7A2 /* WorkStateBuilder.swift in Sources */,
 				AFC9A3E3213AD5DE008AE7A2 /* StateDirection.swift in Sources */,
 				AFC9A3E7213AD63D008AE7A2 /* WorkStateContainer.swift in Sources */,
+				AFC9A3F9213ADD8B008AE7A2 /* ConditionBuilder.swift in Sources */,
+				AFC9A3FB213ADDD1008AE7A2 /* EventBuilder.swift in Sources */,
 				AF18DB392132EA8200AE214F /* StateMachine.swift in Sources */,
 				AFC9A3DF213AD557008AE7A2 /* WorkState.swift in Sources */,
 				AFC9A3E1213AD5A1008AE7A2 /* ExtraStateProtocol.swift in Sources */,
 				AFC9A3E5213AD612008AE7A2 /* StateContainer.swift in Sources */,
+				AFC9A3FD213ADE13008AE7A2 /* WorkEventBuilder.swift in Sources */,
 				AF18DB372132EA3000AE214F /* StateMachineBuilder.swift in Sources */,
 				AFC9A3ED213AD6B7008AE7A2 /* ResultCondition.swift in Sources */,
 			);

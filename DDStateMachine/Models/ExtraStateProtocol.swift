@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol ExtraStateProtocol {
+public protocol ExtraStateProtocol {
   init()
 }

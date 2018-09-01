@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct StateDirection<
+public struct StateDirection<
   TStatus: Hashable,
   TEvent: Equatable,
   TExtraState: ExtraStateProtocol,
@@ -17,7 +17,7 @@ struct StateDirection<
   TStatus: Hashable,
   TFromState: StateBuilder<TStatus, TEvent, TExtraState>,
 TToState: StateBuilder<TStatus, TEvent, TExtraState> {
-  let fromState: TFromState
-  let toState: TToState
+  public let fromState: TFromState
+  public let toState: TToState
 }
 

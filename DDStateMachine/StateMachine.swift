@@ -9,12 +9,12 @@ import Foundation
 import ReactiveSwift
 import Result
 
-class StateMachine<TStatus: Hashable, TEvent: Equatable, TExtraState: ExtraStateProtocol> {
+public class StateMachine<TStatus: Hashable, TEvent: Equatable, TExtraState: ExtraStateProtocol> {
   typealias TState = State<TStatus, TEvent, TExtraState>
 
   private let scheduler: Scheduler
 
-  let currentStatus: Property<TStatus>
+  public let currentStatus: Property<TStatus>
   private let mutableCurrentStatus: MutableProperty<TStatus>
 
   private var states = [TStatus: TState]()
@@ -38,7 +38,7 @@ class StateMachine<TStatus: Hashable, TEvent: Equatable, TExtraState: ExtraState
     self.currentState = self.states[currentStatus]!
   }
 
-  func execute(event: TEvent) {
+  public func execute(event: TEvent) {
     let stateSignalProducer  = self.currentState.execute(event)
 
     _ = self.applyState(stateSignalProducer)
