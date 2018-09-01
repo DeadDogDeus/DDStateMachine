@@ -9,6 +9,10 @@ import Foundation
 import ReactiveSwift
 import Result
 
+/**
+ This class is the main builder of this framework,
+ it can be used for creating of State Machine and customization of its states.
+*/
 public class StateMachineBuilder<TStatus: Hashable, TEvent: Equatable, TExtraState: ExtraStateProtocol> {
   public typealias TStateBuilder = StateBuilder<TStatus, TEvent, TExtraState>
   public typealias TWorkStateBuilder<TWorkResult> = WorkStateBuilder<TStatus, TEvent, TExtraState, TWorkResult>
@@ -27,15 +31,21 @@ public class StateMachineBuilder<TStatus: Hashable, TEvent: Equatable, TExtraSta
     self.scheduler = scheduler
   }
 
+  /**
+  */
   public func shouldTransit(_ direction: TStateDirection) -> EventBuilder<TStatus, TEvent, TExtraState> {
     return EventBuilder(stateMachineBuilder: self, direction: direction)
   }
 
+  /**
+  */
   public func shouldTransit<TWorkResult>(_ direction: TWorkStateDirection<TWorkResult>)
     -> WorkEventBuilder<TStatus, TEvent, TExtraState, TWorkResult> {
       return WorkEventBuilder(stateMachineBuilder: self, direction: direction)
   }
 
+  /**
+  */
   public func build(initialState: TStateBuilder) -> StateMachine<TStatus, TEvent, TExtraState> {
     self.addStates(stateBuilder: initialState)
 

@@ -7,6 +7,8 @@
 
 import Foundation
 
+/**
+*/
 public class EventBuilder<
   TStatus: Hashable,
   TEvent: Equatable,
@@ -29,6 +31,8 @@ TExtraState: ExtraStateProtocol> {
     self.direction = direction
   }
 
+  /**
+  */
   public func by(event: TEvent) -> ConditionBuilder<TStatus, TEvent, TExtraState> {
     return ConditionBuilder(
       event: event,
@@ -37,6 +41,8 @@ TExtraState: ExtraStateProtocol> {
       stateMachineBuilder: stateMachineBuilder)
   }
 
+  /**
+  */
   public func on(_ editExtraState: @escaping (TExtraState) -> Void)
     -> EventBuilder<TStatus, TEvent, TExtraState> {
       self.onConditions.append(editExtraState)

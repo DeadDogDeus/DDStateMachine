@@ -9,6 +9,8 @@ import Foundation
 import ReactiveSwift
 import Result
 
+/**
+*/
 public class WorkEventBuilder<
   TStatus: Hashable,
   TEvent: Equatable,
@@ -34,6 +36,8 @@ TWorkResult> {
     self.direction = direction
   }
 
+  /**
+  */
   public func ifResult(_ result: @escaping (TWorkResult, TExtraState) -> Bool) {
     let condition = TResultCondition(destinationStatus: self.direction.toState.status, action: result)
 
@@ -43,6 +47,8 @@ TWorkResult> {
       onConditions: self.onConditions)
   }
 
+  /**
+  */
   public func on(_ editExtraState: @escaping (TExtraState) -> Void)
     -> WorkEventBuilder<TStatus, TEvent, TExtraState, TWorkResult> {
       self.onConditions.append(editExtraState)

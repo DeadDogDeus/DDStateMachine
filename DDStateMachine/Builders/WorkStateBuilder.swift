@@ -9,6 +9,8 @@ import Foundation
 import ReactiveSwift
 import Result
 
+/**
+*/
 public class WorkStateBuilder<
   TStatus: Hashable,
   TEvent: Equatable,
@@ -31,6 +33,8 @@ TWorkResult>: StateBuilder<TStatus, TEvent, TExtraState> {
     super.init(status)
   }
 
+  /**
+  */
   public static func ~> (
     fromStateBuilder: TWorkStateBuilder,
     toStateBuilder: TStateBuilder) -> TWorkStateDirection {

@@ -7,6 +7,8 @@
 
 import Foundation
 
+/**
+*/
 public class StateBuilder<TStatus: Hashable, TEvent: Equatable, TExtraState: ExtraStateProtocol> {
   let status: TStatus
 
@@ -18,6 +20,8 @@ public class StateBuilder<TStatus: Hashable, TEvent: Equatable, TExtraState: Ext
     self.status = status
   }
 
+  /**
+  */
   public static func ~> (
     fromStateBuilder: StateBuilder,
     toStateBuilder: StateBuilder)

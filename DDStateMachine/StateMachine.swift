@@ -9,12 +9,21 @@ import Foundation
 import ReactiveSwift
 import Result
 
+/**
+ Loosely based interpretation of the old and well-known state machine.
+
+ After the creation of StateMachine, it gives just a possibility to send an event for changing its current state and observe current state changes
+*/
 public class StateMachine<TStatus: Hashable, TEvent: Equatable, TExtraState: ExtraStateProtocol> {
   typealias TState = State<TStatus, TEvent, TExtraState>
 
   private let scheduler: Scheduler
 
+  /**
+   Observable property for checking a current status of State Machine
+  */
   public let currentStatus: Property<TStatus>
+
   private let mutableCurrentStatus: MutableProperty<TStatus>
 
   private var states = [TStatus: TState]()
@@ -38,6 +47,13 @@ public class StateMachine<TStatus: Hashable, TEvent: Equatable, TExtraState: Ext
     self.currentState = self.states[currentStatus]!
   }
 
+  /**
+    Method for executing a new even
+    if this event can be handled by current status
+    it will affect the status of State Machine
+    - parameters:
+      - event: Event for executing
+  */
   public func execute(event: TEvent) {
     let stateSignalProducer  = self.currentState.execute(event)
 

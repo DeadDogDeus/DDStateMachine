@@ -7,6 +7,8 @@
 
 import Foundation
 
+/**
+*/
 public class ConditionBuilder<
   TStatus: Hashable,
   TEvent: Equatable,
@@ -34,6 +36,8 @@ TExtraState: ExtraStateProtocol> {
     self.stateMachineBuilder = stateMachineBuilder
   }
 
+  /**
+  */
   public func immediately() {
     self.stateMachineBuilder.addStates(
       event: self.event,
@@ -41,6 +45,8 @@ TExtraState: ExtraStateProtocol> {
       onConditions: self.onConditions)
   }
 
+  /**
+  */
   public func ifCondition(_ condition: @escaping (TExtraState) -> Bool) {
     let ifCondition: IfCondition<TStatus, TEvent, TExtraState> = IfCondition(
       self.direction.toState.status,
