@@ -27,24 +27,36 @@ public class StateMachineBuilder<TStatus: Hashable, TEvent: Equatable, TExtraSta
   private let scheduler: Scheduler
   private var statesContainers = [TStatus: TStateContainer]()
 
-  init(scheduler: Scheduler) {
+  /**
+  */
+  public init(scheduler: Scheduler) {
     self.scheduler = scheduler
   }
 
   /**
-  */
+   Method for registering transition between states.
+   Example: builder.shouldTransit(state1 ~> state2)
+   - parameters:
+      - direction: transition direction for example: state1 ~> state2
+   */
   public func shouldTransit(_ direction: TStateDirection) -> EventBuilder<TStatus, TEvent, TExtraState> {
     return EventBuilder(stateMachineBuilder: self, direction: direction)
   }
 
   /**
-  */
+   Method for registering transition between states.
+   From state should be WorkState
+   Example: builder.shouldTransit(state1 ~> state2)
+   - parameters:
+   - direction: transition direction for example: state1 ~> state2
+   */
   public func shouldTransit<TWorkResult>(_ direction: TWorkStateDirection<TWorkResult>)
     -> WorkEventBuilder<TStatus, TEvent, TExtraState, TWorkResult> {
       return WorkEventBuilder(stateMachineBuilder: self, direction: direction)
   }
 
   /**
+   Create State Machine with the initial state
   */
   public func build(initialState: TStateBuilder) -> StateMachine<TStatus, TEvent, TExtraState> {
     self.addStates(stateBuilder: initialState)

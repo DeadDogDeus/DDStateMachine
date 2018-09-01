@@ -8,6 +8,8 @@
 import Foundation
 
 /**
+ This building should be used for specifying a condition for a registered transition.
+ Example: builder.shouldTransit(state1 ~> state2).by(event: .goState2).immediately()
 */
 public class ConditionBuilder<
   TStatus: Hashable,
@@ -37,6 +39,9 @@ TExtraState: ExtraStateProtocol> {
   }
 
   /**
+   Method immediately should be used if it is needed to transit immediately
+   after receiving an appropriate event.
+   Example: builder.shouldTransit(state1 ~> state2).by(event: .goState2).immediately()
   */
   public func immediately() {
     self.stateMachineBuilder.addStates(
@@ -46,6 +51,8 @@ TExtraState: ExtraStateProtocol> {
   }
 
   /**
+   Method ifCondition should be used if it is needed to analyse fields of ExtraState model
+   Example: builder.shouldTransit(state1 ~> state2).by(event: .goState2).ifCondition { $0.field == "something" }
   */
   public func ifCondition(_ condition: @escaping (TExtraState) -> Bool) {
     let ifCondition: IfCondition<TStatus, TEvent, TExtraState> = IfCondition(

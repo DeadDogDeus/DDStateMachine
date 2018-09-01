@@ -8,6 +8,8 @@
 import Foundation
 
 /**
+ This builder should be used for State Machine Builder for creating directions between states.
+ Example: builder.shouldTransit(state1 ~> state2)
 */
 public class StateBuilder<TStatus: Hashable, TEvent: Equatable, TExtraState: ExtraStateProtocol> {
   let status: TStatus
@@ -21,7 +23,12 @@ public class StateBuilder<TStatus: Hashable, TEvent: Equatable, TExtraState: Ext
   }
 
   /**
-  */
+   Method for creating a direction for a transition between states.
+   Example: builder.shouldTransit(state1 ~> state2)
+   - parameters:
+   - fromStateBuilder: state1
+   - toStateBuilder: state2
+   */
   public static func ~> (
     fromStateBuilder: StateBuilder,
     toStateBuilder: StateBuilder)

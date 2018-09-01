@@ -10,7 +10,9 @@ import ReactiveSwift
 import Result
 
 /**
-*/
+ This builder should be used for State Machine Builder for creating directions between states.
+ Example: builder.shouldTransit(state1 ~> state2)
+ */
 public class WorkStateBuilder<
   TStatus: Hashable,
   TEvent: Equatable,
@@ -34,7 +36,12 @@ TWorkResult>: StateBuilder<TStatus, TEvent, TExtraState> {
   }
 
   /**
-  */
+   Method for creating a direction for a transition between states.
+   Example: builder.shouldTransit(state1 ~> state2)
+   - parameters:
+   - fromStateBuilder: state1 (it should be WorkStateBuilder)
+   - toStateBuilder: state2
+   */
   public static func ~> (
     fromStateBuilder: TWorkStateBuilder,
     toStateBuilder: TStateBuilder) -> TWorkStateDirection {
