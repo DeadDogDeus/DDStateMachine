@@ -145,6 +145,14 @@ Here is a list of some know problems of this SDK (see Unit Tests for extra detai
 $ gem install cocoapods
 ```
 
+### CocoaPods
+
+If you use CocoaPods to manage your dependencies, simply add ReactiveCocoa to your Podfile:
+
+```bash
+ pod 'DDStateMachine', '~> 1.0'
+```
+
 ### Carthage
 
 [Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.
