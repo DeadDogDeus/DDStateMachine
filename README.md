@@ -139,14 +139,6 @@ Here is a list of some know problems of this SDK (see Unit Tests for extra detai
 
 ### CocoaPods
 
-[CocoaPods](https://cocoapods.org) is a dependency manager for Cocoa projects. You can install it with the following command:
-
-```bash
-$ gem install cocoapods
-```
-
-### CocoaPods
-
 If you use CocoaPods to manage your dependencies, simply add DDStateMachine to your Podfile:
 
 ```bash
