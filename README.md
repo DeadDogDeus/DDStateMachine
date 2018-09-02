@@ -7,15 +7,15 @@ Loosely based interpretation of the old and well-known state machine
 This framework is an interpretation of [UML state machine](https://en.wikipedia.org/wiki/UML_state_machine) and [a finite automaton](https://en.wikipedia.org/wiki/Finite-state_machine).
 
 There are main components of DDStateMachine:
-* **StateMachineBuilder.** The state machine can be initialized just via StateMachineBuilder it provides a flexible interface for creating different sequences of states and relations between them.
+* **StateMachineBuilder.** State Machine can be initialized just via StateMachineBuilder it provides a flexible interface for creating different sequences of states and relations between them.
 * **StateBuilder.** The framework doesn't give access to State but it still needs to create it for describing relations and its action (work).
-* **StateMachine.** After the creation of StateMachine, it gives just a possibility to send an event for changing its current state and observe current state changes.
-* **Event.** Events are commands for manipulation of the state machine, developers can register StateMachine with Events which it would process (we recommend to use enums). If the current step can process this even it will toggle needed transition.
-* **Transition.** Relations between states are called transitions, they can be registered during building the state machine.
-* **Extra State.** Even the most simple systems have gazillions states which are hard for registering like independent states. In this case, we can use an extra state. It is a specific data class which can be attached to each state and be processing inside its work block.
+* **StateMachine.** After the creation of State Machine, it gives a possibility to send an event for changing State Machine current state and observe current state changes.
+* **Event.** Events are commands for manipulation of State Machine, developers can register State Machine with Events which State Machine would process (we recommend to use enums). If the current step can process this even it will toggle needed transition.
+* **Transition.** Relations between states are called transitions, they can be registered during building of State Machine.
+* **Extra State.** Even the most simple systems have many states which are hard for registering like independent states. In this case, we can use an extra state. It is a specific data class which can be attached to each state and be processed inside state's work block.
 * **Result Conditions.** Not only events can toggle transitions if a state does some work we can register result condition. In this case, we can use the result of the work for making a decision:  run or not a particular transition.
-* **On Conditions.** We can register specific listeners on a particular state, they will be called when this state will be set, before running its work.
-* **If Conditions.** We can extend transitions which will be called by specific event using If Conditions. In this case, even if StateMachine gets needed event it will need success result of the "If Condition".
+* **On Conditions.** We can register specific listeners on a particular transition, they will be called when this transition ends, before running the second state's work.
+* **If Conditions.** We can extend transitions which will be called by specific events using If Conditions. In this case, even if State Machine gets needed event it will need success result of the "If Condition".
 
 # Example
 
@@ -47,8 +47,11 @@ enum SyncEvent {
   case sync
 }
 
-class SyncExtraState {
+class SyncExtraState: ExtraStateProtocol {
   var expiryDate: Date?
+  
+  required init() {
+  }
 }
 ```
 
@@ -71,35 +74,34 @@ let synced: StateBuilder<SyncStatus, SyncEvent, SyncExtraState> = StateBuilder(.
 let failed: StateBuilder<SyncStatus, SyncEvent, SyncExtraState> = StateBuilder(.failed)
 
 // For describing states with "Work" we need to use a special type of StateBuilder - WorkStateBuilder.
-let inProgress: WorkStateBuilder<SyncStatus, SyncEvent, SyncExtraState, Bool> =
+let inProgress: WorkStateBuilder<SyncStatus, SyncEvent, SyncExtraState, ResultDomainModel<Void>> =
   WorkStateBuilder(.inProgress, work: self.doSync)
-
-// If the state machine is in Not Synced state and gets the event "sync" 
+ 
+// If the state machine is in Not Synced state and gets the event "sync"
 // it will transit to In Progress state immediately.
 builder.shouldTransit(notSynced ~> inProgress).by(event: .sync).immediately()
-
-// If the state machine is in In Progress state and In Progress work returns true 
+ 
+// If the state machine is in In Progress state and In Progress work returns true
 // the state machine will transit to Synced state immediately.
-builder.shouldTransit(inProgress ~> synced).ifResult { $0 }
-
-// If the state machine is in In Progress state and In Progress work returns false 
+// After the transition it will call "on" condition for synced State (It sets SyncExtraState->expiryDate to now + 10 seconds).
+builder.shouldTransit(inProgress ~> synced)
+  .on { $0.expiryDate = Date() + 10.seconds }
+  .ifResult { (result, _) in result.isSuccessful }
+ 
+// If the state machine is in In Progress state and In Progress work returns false
 // the state machine will transit to Failed state immediately.
-builder.shouldTransit(inProgress ~> failed).ifResult { !$0 }
-
-// If the state machine is set to Synced state
-// It sets SyncExtraState->expiryDate to now + 30 seconds.
+builder.shouldTransit(inProgress ~> failed).ifResult { (result, _) in !result.isSuccessful }
+ 
 // If the state machine is in Synced state and gets the event "sync" and if cache has expired
 // then if all conditions fulfilled it will transit to In Progress state immediately.
 builder.shouldTransit(synced ~> inProgress)
-  .on { $0.expiryDate = Date() + 30.seconds }
   .by(event: .sync)
-  .ifCondition { $0.expiryDate != nil && $0.expiryDate! < Date()
-}
-
-// If the state machine is in Failed state and gets the event "sync" 
+  .ifCondition { $0.expiryDate == nil || $0.expiryDate! < Date() }
+ 
+// If the state machine is in Failed state and gets the event "sync"
 // it will transit to In Progress state immediately.
 builder.shouldTransit(failed ~> inProgress).by(event: .sync).immediately()
-
+ 
 // Create the state machine with initial state Not Synced
 self.stateMachine = builder.build(initialState: notSynced)
 ```
