@@ -1,6 +1,7 @@
 Pod::Spec.new do |s|  
   s.name     = 'DDStateMachine'
   s.version  = '1.0.0'
+  s.swift_version = '4.1'
   s.homepage = 'https://github.com/DeadDogDeus/DDStateMachine'
   s.authors  = { 'Bondarenko Alex' => 'bondarenkoaleksandr1990@gmail.com' }
   s.summary  = 'Loosely based interpretation of the old and well-known state machine.'
