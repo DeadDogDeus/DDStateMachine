@@ -8,6 +8,10 @@ Pod::Spec.new do |s|
   s.source   = { :git => 'https://github.com/DeadDogDeus/DDStateMachine.git', :tag => "#{s.version}" }
   s.source_files = 'DDStateMachine/**/*.swift'
   s.requires_arc = true
+  s.swift_version = '4.1'
 
   s.ios.deployment_target = '10.3'
+
+  s.dependency 'ReactiveSwift', '~> 3.1.0'
+  s.dependency 'Result', '~> 3.2.0'
 end
