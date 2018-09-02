@@ -147,7 +147,7 @@ $ gem install cocoapods
 
 ### CocoaPods
 
-If you use CocoaPods to manage your dependencies, simply add ReactiveCocoa to your Podfile:
+If you use CocoaPods to manage your dependencies, simply add DDStateMachine to your Podfile:
 
 ```bash
  pod 'DDStateMachine', '~> 1.0'
