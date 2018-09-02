@@ -83,14 +83,14 @@ builder.shouldTransit(notSynced ~> inProgress).by(event: .sync).immediately()
  
 // If the state machine is in In Progress state and In Progress work returns true
 // the state machine will transit to Synced state immediately.
-// After the transition it will call "on" condition for synced State (It sets SyncExtraState->expiryDate to now + 10 seconds).
+// After the transition it will call "on" condition for synced State (It sets SyncExtraState->expiryDate to now + 30 seconds).
 builder.shouldTransit(inProgress ~> synced)
   .on { $0.expiryDate = Date() + 10.seconds }
-  .ifResult { (result, _) in result.isSuccessful }
+  .ifResult { (result, _) in result }
  
 // If the state machine is in In Progress state and In Progress work returns false
 // the state machine will transit to Failed state immediately.
-builder.shouldTransit(inProgress ~> failed).ifResult { (result, _) in !result.isSuccessful }
+builder.shouldTransit(inProgress ~> failed).ifResult { (result, _) in !result }
  
 // If the state machine is in Synced state and gets the event "sync" and if cache has expired
 // then if all conditions fulfilled it will transit to In Progress state immediately.
@@ -121,6 +121,13 @@ self.stateMachine = builder.build(initialState: notSynced)
 ```
 
 This example uses [SwiftDate](https://github.com/malcommac/SwiftDate) for working with dates and [ReactiveSwift](https://github.com/ReactiveCocoa/ReactiveSwift) for scheduling.
+
+# Known peculiarities
+
+Here is a list of some know problems of this SDK (see Unit Tests for extra details)
+
+- if the initial state is a work-state, the state machine will not run its work.
+- If the state machine is acyclic and the last state has a work, the state machine will not run its work.
 
 ## Requirements
 
