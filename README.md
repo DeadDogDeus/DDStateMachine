@@ -122,7 +122,7 @@ self.stateMachine = builder.build(initialState: notSynced)
 
 This example uses [SwiftDate](https://github.com/malcommac/SwiftDate) for working with dates and [ReactiveSwift](https://github.com/ReactiveCocoa/ReactiveSwift) for scheduling.
 
-# Known peculiarities
+## Known peculiarities
 
 Here is a list of some know problems of this SDK (see Unit Tests for extra details)
 
