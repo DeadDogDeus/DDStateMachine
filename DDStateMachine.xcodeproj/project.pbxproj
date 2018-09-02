@@ -15,11 +15,6 @@
 		AF18DB352132E9F900AE214F /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF18DB342132E9F900AE214F /* State.swift */; };
 		AF18DB372132EA3000AE214F /* StateMachineBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF18DB362132EA3000AE214F /* StateMachineBuilder.swift */; };
 		AF18DB392132EA8200AE214F /* StateMachine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF18DB382132EA8200AE214F /* StateMachine.swift */; };
-		AF18DB432132EBA000AE214F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF18DB422132EBA000AE214F /* AppDelegate.swift */; };
-		AF18DB452132EBA000AE214F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF18DB442132EBA000AE214F /* ViewController.swift */; };
-		AF18DB482132EBA000AE214F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF18DB462132EBA000AE214F /* Main.storyboard */; };
-		AF18DB4A2132EBA500AE214F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF18DB492132EBA500AE214F /* Assets.xcassets */; };
-		AF18DB4D2132EBA500AE214F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AF18DB4B2132EBA500AE214F /* LaunchScreen.storyboard */; };
 		AFC9A3DF213AD557008AE7A2 /* WorkState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9A3DE213AD557008AE7A2 /* WorkState.swift */; };
 		AFC9A3E1213AD5A1008AE7A2 /* ExtraStateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9A3E0213AD5A1008AE7A2 /* ExtraStateProtocol.swift */; };
 		AFC9A3E3213AD5DE008AE7A2 /* StateDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9A3E2213AD5DE008AE7A2 /* StateDirection.swift */; };
@@ -59,13 +54,6 @@
 		AF18DB342132E9F900AE214F /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
 		AF18DB362132EA3000AE214F /* StateMachineBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateMachineBuilder.swift; sourceTree = "<group>"; };
 		AF18DB382132EA8200AE214F /* StateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateMachine.swift; sourceTree = "<group>"; };
-		AF18DB402132EBA000AE214F /* DDStateMachineSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DDStateMachineSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		AF18DB422132EBA000AE214F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		AF18DB442132EBA000AE214F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		AF18DB472132EBA000AE214F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		AF18DB492132EBA500AE214F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		AF18DB4C2132EBA500AE214F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		AF18DB4E2132EBA500AE214F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AFC9A3DE213AD557008AE7A2 /* WorkState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkState.swift; sourceTree = "<group>"; };
 		AFC9A3E0213AD5A1008AE7A2 /* ExtraStateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtraStateProtocol.swift; sourceTree = "<group>"; };
 		AFC9A3E2213AD5DE008AE7A2 /* StateDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateDirection.swift; sourceTree = "<group>"; };
@@ -101,13 +89,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		AF18DB3D2132EBA000AE214F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -116,7 +97,6 @@
 			children = (
 				AF18DB172132E59500AE214F /* DDStateMachine */,
 				AF18DB222132E59500AE214F /* DDStateMachineTests */,
-				AF18DB412132EBA000AE214F /* DDStateMachineSample */,
 				AF18DB162132E59500AE214F /* Products */,
 				AF18DB2F2132E97B00AE214F /* Frameworks */,
 			);
@@ -127,7 +107,6 @@
 			children = (
 				AF18DB152132E59500AE214F /* DDStateMachine.framework */,
 				AF18DB1E2132E59500AE214F /* DDStateMachineTests.xctest */,
-				AF18DB402132EBA000AE214F /* DDStateMachineSample.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -162,19 +141,6 @@
 				AF18DB302132E97B00AE214F /* ReactiveSwift.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		AF18DB412132EBA000AE214F /* DDStateMachineSample */ = {
-			isa = PBXGroup;
-			children = (
-				AF18DB422132EBA000AE214F /* AppDelegate.swift */,
-				AF18DB442132EBA000AE214F /* ViewController.swift */,
-				AF18DB462132EBA000AE214F /* Main.storyboard */,
-				AF18DB492132EBA500AE214F /* Assets.xcassets */,
-				AF18DB4B2132EBA500AE214F /* LaunchScreen.storyboard */,
-				AF18DB4E2132EBA500AE214F /* Info.plist */,
-			);
-			path = DDStateMachineSample;
 			sourceTree = "<group>";
 		};
 		AFC9A3F2213ADCDE008AE7A2 /* Builders */ = {
@@ -272,23 +238,6 @@
 			productReference = AF18DB1E2132E59500AE214F /* DDStateMachineTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		AF18DB3F2132EBA000AE214F /* DDStateMachineSample */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = AF18DB5A2132EBA500AE214F /* Build configuration list for PBXNativeTarget "DDStateMachineSample" */;
-			buildPhases = (
-				AF18DB3C2132EBA000AE214F /* Sources */,
-				AF18DB3D2132EBA000AE214F /* Frameworks */,
-				AF18DB3E2132EBA000AE214F /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = DDStateMachineSample;
-			productName = DDStateMachineSample;
-			productReference = AF18DB402132EBA000AE214F /* DDStateMachineSample.app */;
-			productType = "com.apple.product-type.application";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -303,9 +252,6 @@
 						LastSwiftMigration = 0940;
 					};
 					AF18DB1D2132E59500AE214F = {
-						CreatedOnToolsVersion = 9.4.1;
-					};
-					AF18DB3F2132EBA000AE214F = {
 						CreatedOnToolsVersion = 9.4.1;
 					};
 				};
@@ -325,7 +271,6 @@
 			targets = (
 				AF18DB142132E59500AE214F /* DDStateMachine */,
 				AF18DB1D2132E59500AE214F /* DDStateMachineTests */,
-				AF18DB3F2132EBA000AE214F /* DDStateMachineSample */,
 			);
 		};
 /* End PBXProject section */
@@ -342,16 +287,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		AF18DB3E2132EBA000AE214F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AF18DB4D2132EBA500AE214F /* LaunchScreen.storyboard in Resources */,
-				AF18DB4A2132EBA500AE214F /* Assets.xcassets in Resources */,
-				AF18DB482132EBA000AE214F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,15 +359,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		AF18DB3C2132EBA000AE214F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AF18DB452132EBA000AE214F /* ViewController.swift in Sources */,
-				AF18DB432132EBA000AE214F /* AppDelegate.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -442,25 +368,6 @@
 			targetProxy = AF18DB202132E59500AE214F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		AF18DB462132EBA000AE214F /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				AF18DB472132EBA000AE214F /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		AF18DB4B2132EBA500AE214F /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				AF18DB4C2132EBA500AE214F /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		AF18DB272132E59500AE214F /* Debug */ = {
@@ -688,40 +595,6 @@
 			};
 			name = Release;
 		};
-		AF18DB5B2132EBA500AE214F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = DDStateMachineSample/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = DeadDog.DDStateMachineSample;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		AF18DB5C2132EBA500AE214F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = DDStateMachineSample/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = DeadDog.DDStateMachineSample;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -748,15 +621,6 @@
 			buildConfigurations = (
 				AF18DB2D2132E59500AE214F /* Debug */,
 				AF18DB2E2132E59500AE214F /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		AF18DB5A2132EBA500AE214F /* Build configuration list for PBXNativeTarget "DDStateMachineSample" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				AF18DB5B2132EBA500AE214F /* Debug */,
-				AF18DB5C2132EBA500AE214F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
