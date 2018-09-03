@@ -1,4 +1,5 @@
 # DDStateMachine
+State Machine for Swift
 Loosely based interpretation of the old and well-known state machine
 
 ![Abstract diagram](/Screenshots/Abstract%20diagram.png?raw=true)
