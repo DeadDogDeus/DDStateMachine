@@ -7,12 +7,14 @@
 
 import Foundation
 
-class ResultCondition<TStatus: Hashable, TEvent, TExtraState: ExtraStateProtocol, TWorkResult> {
-  let action: (TWorkResult, TExtraState) -> Bool
-  let destinationStatus: TStatus
+class ResultCondition<TState: Hashable, TEvent, TExtendedState: ExtendedStateProtocol, TWorkResult>
+: TransitionCondition<TState> {
+  let action: (TWorkResult, TExtendedState) -> Bool
 
-  init(destinationStatus: TStatus, action: @escaping (TWorkResult, TExtraState) -> Bool) {
-    self.destinationStatus = destinationStatus
+  init(destinationState: TState, action: @escaping (TWorkResult, TExtendedState) -> Bool) {
     self.action = action
+
+    super.init(destinationState)
   }
 }
+

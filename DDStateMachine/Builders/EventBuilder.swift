@@ -10,24 +10,24 @@ import Foundation
 /**
  This building should be used for specifying an event which will toggle a registered transition.
  Example: builder.shouldTransit(state1 ~> state2).by(event: .goState2).immediately()
-*/
+ */
 public class EventBuilder<
-  TStatus: Hashable,
+  TState: Hashable,
   TEvent: Equatable,
-  TExtraState: ExtraStateProtocol> {
-  typealias TStateBuilder = StateBuilder<TStatus, TEvent, TExtraState>
-  typealias TStateDirection = StateDirection<TStatus, TEvent, TExtraState, TStateBuilder, TStateBuilder>
+  TExtendedState: ExtendedStateProtocol> {
+  typealias TStateBuilder = StateBuilder<TState, TEvent, TExtendedState>
+  typealias TStateDirection = MachineStateDirection<TState, TEvent, TExtendedState, TStateBuilder, TStateBuilder>
 
   private let direction: TStateDirection
-  private let stateMachineBuilder: StateMachineBuilder<TStatus, TEvent, TExtraState>
-  private var onConditions = [OnCondition<TExtraState>]()
+  private let stateMachineBuilder: StateMachineBuilder<TState, TEvent, TExtendedState>
+  private var onTransitionActions = [OnTransitionAction<TExtendedState>]()
 
   private init() {
     fatalError()
   }
 
   init(
-    stateMachineBuilder: StateMachineBuilder<TStatus, TEvent, TExtraState>,
+    stateMachineBuilder: StateMachineBuilder<TState, TEvent, TExtendedState>,
     direction: TStateDirection) {
     self.stateMachineBuilder = stateMachineBuilder
     self.direction = direction
@@ -36,12 +36,12 @@ public class EventBuilder<
   /**
    Method by should be used for registering an even for a transition.
    Example: builder.shouldTransit(state1 ~> state2).by(event: .goState2).immediately()
-  */
-  public func by(event: TEvent) -> ConditionBuilder<TStatus, TEvent, TExtraState> {
+   */
+  public func by(event: TEvent) -> ConditionBuilder<TState, TEvent, TExtendedState> {
     return ConditionBuilder(
       event: event,
       direction: self.direction,
-      onConditions: self.onConditions,
+      onTransitionActions: self.onTransitionActions,
       stateMachineBuilder: stateMachineBuilder)
   }
 
@@ -54,10 +54,12 @@ public class EventBuilder<
    .immediately()
 
    In this case editExtraState block will process the extra state for state2
-  */
-  public func on(_ editExtraState: @escaping (TExtraState) -> Void)
-    -> EventBuilder<TStatus, TEvent, TExtraState> {
-      self.onConditions.append(editExtraState)
+   */
+  public func on(_ editExtendedState: @escaping (TExtendedState) -> Void)
+    -> EventBuilder<TState, TEvent, TExtendedState> {
+      let onTransitionAction = OnTransitionAction(action: editExtendedState)
+
+      self.onTransitionActions.append(onTransitionAction)
 
       return self
   }

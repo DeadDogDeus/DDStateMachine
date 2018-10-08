@@ -10,16 +10,16 @@ import Foundation
 /**
  This builder should be used for State Machine Builder for creating directions between states.
  Example: builder.shouldTransit(state1 ~> state2)
-*/
-public class StateBuilder<TStatus: Hashable, TEvent: Equatable, TExtraState: ExtraStateProtocol> {
-  let status: TStatus
+ */
+public class StateBuilder<TState: Hashable, TEvent: Equatable, TExtendedState: ExtendedStateProtocol> {
+  let state: TState
 
   private init() {
     fatalError()
   }
 
-  init(_ status: TStatus) {
-    self.status = status
+  init(_ state: TState) {
+    self.state = state
   }
 
   /**
@@ -32,7 +32,7 @@ public class StateBuilder<TStatus: Hashable, TEvent: Equatable, TExtraState: Ext
   public static func ~> (
     fromStateBuilder: StateBuilder,
     toStateBuilder: StateBuilder)
-    -> StateDirection<TStatus, TEvent, TExtraState, StateBuilder, StateBuilder> {
-      return StateDirection(fromState: fromStateBuilder, toState: toStateBuilder)
+    -> MachineStateDirection<TState, TEvent, TExtendedState, StateBuilder, StateBuilder> {
+      return MachineStateDirection(fromStateBuilder: fromStateBuilder, toStateBuilder: toStateBuilder)
   }
 }

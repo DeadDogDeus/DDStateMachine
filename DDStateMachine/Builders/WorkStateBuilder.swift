@@ -14,14 +14,15 @@ import Result
  Example: builder.shouldTransit(state1 ~> state2)
  */
 public class WorkStateBuilder<
-  TStatus: Hashable,
+  TState: Hashable,
   TEvent: Equatable,
-  TExtraState: ExtraStateProtocol,
-TWorkResult>: StateBuilder<TStatus, TEvent, TExtraState> {
-  public typealias TWorkStateBuilder = WorkStateBuilder<TStatus, TEvent, TExtraState, TWorkResult>
-  public typealias TStateBuilder = StateBuilder<TStatus, TEvent, TExtraState>
-  public typealias TWorkStateDirection = StateDirection<TStatus, TEvent, TExtraState, TWorkStateBuilder, TStateBuilder>
-  public typealias Work = (TExtraState) -> SignalProducer<TWorkResult, NoError>
+  TExtendedState: ExtendedStateProtocol,
+TWorkResult>: StateBuilder<TState, TEvent, TExtendedState> {
+  public typealias TWorkStateBuilder = WorkStateBuilder<TState, TEvent, TExtendedState, TWorkResult>
+  public typealias TStateBuilder = StateBuilder<TState, TEvent, TExtendedState>
+  public typealias TWorkStateDirection =
+    MachineStateDirection<TState, TEvent, TExtendedState, TWorkStateBuilder, TStateBuilder>
+  typealias Work = (TExtendedState) -> SignalProducer<TWorkResult, NoError>
 
   let work: Work
 
@@ -29,10 +30,10 @@ TWorkResult>: StateBuilder<TStatus, TEvent, TExtraState> {
     fatalError()
   }
 
-  init(_ status: TStatus, work: @escaping Work) {
+  init(_ state: TState, work: @escaping Work) {
     self.work = work
 
-    super.init(status)
+    super.init(state)
   }
 
   /**
@@ -45,6 +46,6 @@ TWorkResult>: StateBuilder<TStatus, TEvent, TExtraState> {
   public static func ~> (
     fromStateBuilder: TWorkStateBuilder,
     toStateBuilder: TStateBuilder) -> TWorkStateDirection {
-    return StateDirection(fromState: fromStateBuilder, toState: toStateBuilder)
+    return MachineStateDirection(fromStateBuilder: fromStateBuilder, toStateBuilder: toStateBuilder)
   }
 }

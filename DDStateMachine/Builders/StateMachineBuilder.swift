@@ -12,34 +12,53 @@ import Result
 /**
  This class is the main builder of this framework,
  it can be used for creating of State Machine and customization of its states.
-*/
-public class StateMachineBuilder<TStatus: Hashable, TEvent: Equatable, TExtraState: ExtraStateProtocol> {
-  public typealias TStateBuilder = StateBuilder<TStatus, TEvent, TExtraState>
-  public typealias TWorkStateBuilder<TWorkResult> = WorkStateBuilder<TStatus, TEvent, TExtraState, TWorkResult>
-  public typealias TStateDirection = StateDirection<TStatus, TEvent, TExtraState, TStateBuilder, TStateBuilder>
+ */
+public class StateMachineBuilder<TState: Hashable, TEvent: Equatable, TExtendedState: ExtendedStateProtocol> {
+  public typealias TStateBuilder = StateBuilder<TState, TEvent, TExtendedState>
+  public typealias TWorkStateBuilder<TWorkResult> = WorkStateBuilder<TState, TEvent, TExtendedState, TWorkResult>
+  public typealias TStateDirection = MachineStateDirection<TState, TEvent, TExtendedState, TStateBuilder, TStateBuilder>
   public typealias TWorkStateDirection<TWorkResult> =
-    StateDirection<TStatus, TEvent, TExtraState, TWorkStateBuilder<TWorkResult>, TStateBuilder>
-  typealias TStateContainer = StateContainer<TStatus, TEvent, TExtraState>
-  typealias TWorkStateContainer<TWorkResult> = WorkStateContainer<TStatus, TEvent, TExtraState, TWorkResult>
-  typealias TResultCondition<TWorkResult> = ResultCondition<TStatus, TEvent, TExtraState, TWorkResult>
-  typealias Work<TWorkResult> = (TExtraState) -> SignalProducer<TWorkResult, NoError>
+    MachineStateDirection<TState, TEvent, TExtendedState, TWorkStateBuilder<TWorkResult>, TStateBuilder>
+  typealias TStateContainer = MachineStateContainer<TState, TEvent, TExtendedState>
+  typealias TWorkStateContainer<TWorkResult> = MachineWorkStateContainer<TState, TEvent, TExtendedState, TWorkResult>
+  typealias TResultCondition<TWorkResult> = ResultCondition<TState, TEvent, TExtendedState, TWorkResult>
+  public typealias Work<TWorkResult> = (TExtendedState) -> SignalProducer<TWorkResult, NoError>
 
-  private let scheduler: Scheduler
-  private var statesContainers = [TStatus: TStateContainer]()
+  private let executeScheduler: Scheduler
+  private let stateScheduler: Scheduler
 
-  /**
-  */
-  public init(scheduler: Scheduler) {
-    self.scheduler = scheduler
+  private var statesContainers = [TState: TStateContainer]()
+
+  public init(executeScheduler: Scheduler, stateScheduler: Scheduler) {
+    self.executeScheduler = executeScheduler
+    self.stateScheduler = stateScheduler
+  }
+
+  public func createStateBuilder(from state: TState) -> TStateBuilder {
+    let stateBuilder: TStateBuilder = StateBuilder(state)
+
+    self.addState(stateBuilder: stateBuilder)
+
+    return stateBuilder
+  }
+
+  public func createStateBuilder<TWorkResult>(
+    from state: TState,
+    work: @escaping Work<TWorkResult>) -> TWorkStateBuilder<TWorkResult> {
+    let stateBuilder: TWorkStateBuilder<TWorkResult> = WorkStateBuilder(state, work: work)
+
+    self.addWorkState(stateBuilder: stateBuilder)
+
+    return stateBuilder
   }
 
   /**
    Method for registering transition between states.
    Example: builder.shouldTransit(state1 ~> state2)
    - parameters:
-      - direction: transition direction for example: state1 ~> state2
+   - direction: transition direction for example: state1 ~> state2
    */
-  public func shouldTransit(_ direction: TStateDirection) -> EventBuilder<TStatus, TEvent, TExtraState> {
+  public func shouldTransit(_ direction: TStateDirection) -> EventBuilder<TState, TEvent, TExtendedState> {
     return EventBuilder(stateMachineBuilder: self, direction: direction)
   }
 
@@ -51,99 +70,106 @@ public class StateMachineBuilder<TStatus: Hashable, TEvent: Equatable, TExtraSta
    - direction: transition direction for example: state1 ~> state2
    */
   public func shouldTransit<TWorkResult>(_ direction: TWorkStateDirection<TWorkResult>)
-    -> WorkEventBuilder<TStatus, TEvent, TExtraState, TWorkResult> {
+    -> WorkEventBuilder<TState, TEvent, TExtendedState, TWorkResult> {
       return WorkEventBuilder(stateMachineBuilder: self, direction: direction)
   }
 
   /**
    Create State Machine with the initial state
-  */
-  public func build(initialState: TStateBuilder) -> StateMachine<TStatus, TEvent, TExtraState> {
-    self.addStates(stateBuilder: initialState)
+   */
+  public func build(initialState: TStateBuilder) -> StateMachine<TState, TEvent, TExtendedState> {
+    self.addState(stateBuilder: initialState)
 
-    let states = self.createStates()
+    let internalStates = self.createInternalStates()
 
     return StateMachine(
-      scheduler: scheduler,
-      currentStatus: initialState.status,
-      states: states)
+      executeScheduler: self.executeScheduler,
+      stateScheduler: self.stateScheduler,
+      currentState: initialState.state,
+      internalStates: internalStates)
   }
 
   func addStates(
     event: TEvent,
     direction: TStateDirection,
-    onConditions: [OnCondition<TExtraState>] = [OnCondition<TExtraState>](),
-    ifConditions: [IfCondition<TStatus, TEvent, TExtraState>]? = nil) {
+    onTransitionActions: [OnTransitionAction<TExtendedState>] = [OnTransitionAction<TExtendedState>](),
+    ifConditions: [IfCondition<TState, TEvent, TExtendedState>]? = nil) {
 
-    self.editStateContainer(for: direction.fromState.status) { (container) in
+    self.editStateContainer(for: direction.fromStateBuilder.state) { (container) in
       if let conditions = ifConditions {
         container.ifConditions.append(contentsOf: conditions)
       } else {
-        let ifCondition = IfCondition<TStatus, TEvent, TExtraState>(
-          direction.toState.status,
+        let ifCondition = IfCondition<TState, TEvent, TExtendedState>(
+          direction.toStateBuilder.state,
           event: event) { _ in true }
 
         container.ifConditions.append(ifCondition)
       }
     }
 
-    self.editStateContainer(for: direction.toState.status) { (container) in
-      container.onConditions.append(contentsOf: onConditions)
+    self.editStateContainer(for: direction.toStateBuilder.state) { (container) in
+      container.onTransitionActions.append(contentsOf: onTransitionActions)
     }
   }
 
   func addWorkStates<TWorkResult>(
     direction: TWorkStateDirection<TWorkResult>,
     resultCondition: TResultCondition<TWorkResult>,
-    onConditions: [OnCondition<TExtraState>] = [OnCondition<TExtraState>]()) {
+    onTransitionActions: [OnTransitionAction<TExtendedState>] = [OnTransitionAction<TExtendedState>]()) {
 
     self.editWorkStateContainer(
-      for: direction.fromState.status,
-      work: direction.fromState.work) { $0.resultConditions.append(resultCondition) }
+      for: direction.fromStateBuilder.state,
+      work: direction.fromStateBuilder.work) { $0.resultConditions.append(resultCondition) }
 
     self.editStateContainer(
-    for: direction.toState.status) { $0.onConditions.append(contentsOf: onConditions) }
+    for: direction.toStateBuilder.state) { $0.onTransitionActions.append(contentsOf: onTransitionActions) }
   }
 
-  private func addStates(stateBuilder: TStateBuilder) {
-    self.statesContainers[stateBuilder.status] = self.stateContainer(for: stateBuilder.status)
+  private func addState(stateBuilder: TStateBuilder) {
+    self.statesContainers[stateBuilder.state] = self.stateContainer(for: stateBuilder.state)
   }
 
-  private func editStateContainer(for status: TStatus, _ action: @escaping (TStateContainer) -> Void) {
-    let stateContainer = self.stateContainer(for: status)
+  private func addWorkState<TWorkResult>(stateBuilder: TWorkStateBuilder<TWorkResult>) {
+    self.statesContainers[stateBuilder.state] = self.workStateContainer(
+      for: stateBuilder.state,
+      work: stateBuilder.work)
+  }
+
+  private func editStateContainer(for state: TState, _ action: @escaping (TStateContainer) -> Void) {
+    let stateContainer = self.stateContainer(for: state)
 
     action(stateContainer)
 
-    self.statesContainers[status] = stateContainer
+    self.statesContainers[state] = stateContainer
   }
 
   private func editWorkStateContainer<TWorkResult>(
-    for status: TStatus,
+    for state: TState,
     work: @escaping Work<TWorkResult>,
     _ action: @escaping (TWorkStateContainer<TWorkResult>) -> Void) {
-    let workStateContainer = self.workStateContainer(for: status, work: work)
+    let workStateContainer = self.workStateContainer(for: state, work: work)
 
     action(workStateContainer)
 
-    self.statesContainers[status] = workStateContainer
+    self.statesContainers[state] = workStateContainer
   }
 
-  private func createStates() -> [State<TStatus, TEvent, TExtraState>] {
-    return self.statesContainers.map { $0.value.toState() }
+  private func createInternalStates() -> [InternalState<TState, TEvent, TExtendedState>] {
+    return self.statesContainers.map { $0.value.toInternalState() }
   }
 
-  private func stateContainer(for status: TStatus) -> TStateContainer {
-    return self.statesContainers[status] ?? StateContainer(status: status)
+  private func stateContainer(for state: TState) -> TStateContainer {
+    return self.statesContainers[state] ?? MachineStateContainer(state: state)
   }
 
   private func workStateContainer<TWorkResult>(
-    for status: TStatus,
+    for state: TState,
     work: @escaping Work<TWorkResult>)
     -> TWorkStateContainer<TWorkResult> {
-      var resultContainer = TWorkStateContainer<TWorkResult>(status: status, work: work)
+      var resultContainer = TWorkStateContainer<TWorkResult>(state: state, work: work)
 
-      if let stateContainer = self.statesContainers[status] {
-        resultContainer.onConditions.append(contentsOf: stateContainer.onConditions)
+      if let stateContainer = self.statesContainers[state] {
+        resultContainer.onTransitionActions.append(contentsOf: stateContainer.onTransitionActions)
         resultContainer.ifConditions.append(contentsOf: stateContainer.ifConditions)
 
         if let workStateContainer = stateContainer as? TWorkStateContainer<TWorkResult> {
