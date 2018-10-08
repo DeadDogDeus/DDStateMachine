@@ -1,5 +1,7 @@
 # DDStateMachine
-Loosely based interpretation of the old and well-known state machine
+State Machine for Swift.
+
+Loosely based interpretation of the old and well-known state machine.
 
 ![Abstract diagram](/Screenshots/Abstract%20diagram.png?raw=true)
 
@@ -85,7 +87,7 @@ builder.shouldTransit(notSynced ~> inProgress).by(event: .sync).immediately()
 // the state machine will transit to Synced state immediately.
 // After the transition it will call "on" condition for synced State (It sets SyncExtraState->expiryDate to now + 30 seconds).
 builder.shouldTransit(inProgress ~> synced)
-  .on { $0.expiryDate = Date() + 10.seconds }
+  .on { $0.expiryDate = Date() + 30.seconds }
   .ifResult { (result, _) in result }
  
 // If the state machine is in In Progress state and In Progress work returns false
