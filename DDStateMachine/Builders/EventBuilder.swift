@@ -57,10 +57,8 @@ public class EventBuilder<
    */
   public func on(_ editExtendedState: @escaping (TExtendedState) -> Void)
     -> EventBuilder<TState, TEvent, TExtendedState> {
-      let onTransitionAction = OnTransitionAction(action: editExtendedState)
+    self.onTransitionActions.append(OnTransitionAction(action: editExtendedState))
 
-      self.onTransitionActions.append(onTransitionAction)
-
-      return self
+    return self
   }
 }

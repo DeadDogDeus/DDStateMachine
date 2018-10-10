@@ -8,7 +8,7 @@
 import Foundation
 
 class IfCondition<TState: Hashable, TEvent, TExtendedState: ExtendedStateProtocol>
-: TransitionCondition<TState> {
+  : TransitionCondition<TState> {
   let action: (TExtendedState) -> Bool
   let event: TEvent
 

@@ -8,7 +8,7 @@
 import Foundation
 
 class ResultCondition<TState: Hashable, TEvent, TExtendedState: ExtendedStateProtocol, TWorkResult>
-: TransitionCondition<TState> {
+  : TransitionCondition<TState> {
   let action: (TWorkResult, TExtendedState) -> Bool
 
   init(destinationState: TState, action: @escaping (TWorkResult, TExtendedState) -> Bool) {

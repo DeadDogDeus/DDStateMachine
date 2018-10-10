@@ -44,7 +44,9 @@ public class WorkEventBuilder<
    Example: builder.shouldTransit(state1 ~> state2).ifResult { (result, _) in result == "something" }
    */
   public func ifResult(_ result: @escaping (TWorkResult, TExtendedState) -> Bool) {
-    let condition = TResultCondition(destinationState: self.direction.toStateBuilder.state, action: result)
+    let condition = TResultCondition(
+      destinationState: self.direction.toStateBuilder.state,
+      action: result)
 
     self.stateMachineBuilder.addWorkStates(
       direction: self.direction,
@@ -64,10 +66,8 @@ public class WorkEventBuilder<
    */
   public func on(_ editExtendedState: @escaping (TExtendedState) -> Void)
     -> WorkEventBuilder<TState, TEvent, TExtendedState, TWorkResult> {
-      let onTransitionAction = OnTransitionAction(action: editExtendedState)
+    self.onTransitionActions.append(OnTransitionAction(action: editExtendedState))
 
-      self.onTransitionActions.append(onTransitionAction)
-
-      return self
+    return self
   }
 }

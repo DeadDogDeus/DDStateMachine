@@ -10,7 +10,7 @@ import ReactiveSwift
 import Result
 
 class InternalWorkState<TState: Hashable, TEvent: Equatable, TExtendedState: ExtendedStateProtocol, TWorkResult>
-: InternalState<TState, TEvent, TExtendedState> {
+  : InternalState<TState, TEvent, TExtendedState> {
   typealias Work = (TExtendedState) -> SignalProducer<TWorkResult, NoError>
 
   private let resultConditions: [ResultCondition<TState, TEvent, TExtendedState, TWorkResult>]
@@ -25,7 +25,10 @@ class InternalWorkState<TState: Hashable, TEvent: Equatable, TExtendedState: Ext
     self.work = work
     self.resultConditions = resultConditions
 
-    super.init(state: state, onTransitionActions: onTransitionActions, ifConditions: ifConditions)
+    super.init(
+      state: state,
+      onTransitionActions: onTransitionActions,
+      ifConditions: ifConditions)
   }
 
   override func run() -> SignalProducer<TState?, NoError> {
@@ -40,7 +43,7 @@ class InternalWorkState<TState: Hashable, TEvent: Equatable, TExtendedState: Ext
   private func nextState(from workResult: TWorkResult) -> TState? {
     let destinationState = self.resultConditions
       .first { $0.action(workResult, self.extendedState) }
-      .flatMap { $0.destinationState}
+      .flatMap { $0.destinationState }
 
     return destinationState
   }

@@ -71,7 +71,7 @@ public class StateMachineBuilder<TState: Hashable, TEvent: Equatable, TExtendedS
    */
   public func shouldTransit<TWorkResult>(_ direction: TWorkStateDirection<TWorkResult>)
     -> WorkEventBuilder<TState, TEvent, TExtendedState, TWorkResult> {
-      return WorkEventBuilder(stateMachineBuilder: self, direction: direction)
+    return WorkEventBuilder(stateMachineBuilder: self, direction: direction)
   }
 
   /**
@@ -117,12 +117,13 @@ public class StateMachineBuilder<TState: Hashable, TEvent: Equatable, TExtendedS
     resultCondition: TResultCondition<TWorkResult>,
     onTransitionActions: [OnTransitionAction<TExtendedState>] = [OnTransitionAction<TExtendedState>]()) {
 
-    self.editWorkStateContainer(
-      for: direction.fromStateBuilder.state,
-      work: direction.fromStateBuilder.work) { $0.resultConditions.append(resultCondition) }
+    self.editWorkStateContainer(for: direction.fromStateBuilder.state, work: direction.fromStateBuilder.work) {
+        $0.resultConditions.append(resultCondition)
+    }
 
-    self.editStateContainer(
-    for: direction.toStateBuilder.state) { $0.onTransitionActions.append(contentsOf: onTransitionActions) }
+    self.editStateContainer(for: direction.toStateBuilder.state) {
+      $0.onTransitionActions.append(contentsOf: onTransitionActions)
+    }
   }
 
   private func addState(stateBuilder: TStateBuilder) {
@@ -166,17 +167,17 @@ public class StateMachineBuilder<TState: Hashable, TEvent: Equatable, TExtendedS
     for state: TState,
     work: @escaping Work<TWorkResult>)
     -> TWorkStateContainer<TWorkResult> {
-      var resultContainer = TWorkStateContainer<TWorkResult>(state: state, work: work)
+    var resultContainer = TWorkStateContainer<TWorkResult>(state: state, work: work)
 
-      if let stateContainer = self.statesContainers[state] {
-        resultContainer.onTransitionActions.append(contentsOf: stateContainer.onTransitionActions)
-        resultContainer.ifConditions.append(contentsOf: stateContainer.ifConditions)
+    if let stateContainer = self.statesContainers[state] {
+      resultContainer.onTransitionActions.append(contentsOf: stateContainer.onTransitionActions)
+      resultContainer.ifConditions.append(contentsOf: stateContainer.ifConditions)
 
-        if let workStateContainer = stateContainer as? TWorkStateContainer<TWorkResult> {
-          resultContainer = workStateContainer
-        }
+      if let workStateContainer = stateContainer as? TWorkStateContainer<TWorkResult> {
+        resultContainer = workStateContainer
       }
+    }
 
-      return resultContainer
+    return resultContainer
   }
 }

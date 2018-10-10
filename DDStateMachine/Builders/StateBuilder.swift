@@ -33,6 +33,8 @@ public class StateBuilder<TState: Hashable, TEvent: Equatable, TExtendedState: E
     fromStateBuilder: StateBuilder,
     toStateBuilder: StateBuilder)
     -> MachineStateDirection<TState, TEvent, TExtendedState, StateBuilder, StateBuilder> {
-      return MachineStateDirection(fromStateBuilder: fromStateBuilder, toStateBuilder: toStateBuilder)
+    return MachineStateDirection(
+      fromStateBuilder: fromStateBuilder,
+      toStateBuilder: toStateBuilder)
   }
 }

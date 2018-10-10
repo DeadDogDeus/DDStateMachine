@@ -13,16 +13,19 @@ class MachineWorkStateContainer<
   TState: Hashable,
   TEvent: Equatable,
   TExtendedState: ExtendedStateProtocol,
-TWorkResult> : MachineStateContainer<TState, TEvent, TExtendedState> {
+  TWorkResult> : MachineStateContainer<TState, TEvent, TExtendedState> {
   var resultConditions = [ResultCondition<TState, TEvent, TExtendedState, TWorkResult>]()
-  let work: (TExtendedState)-> SignalProducer<TWorkResult, NoError>
+  let work: (TExtendedState) -> SignalProducer<TWorkResult, NoError>
 
-  init(state: TState, work: @escaping (TExtendedState)-> SignalProducer<TWorkResult, NoError>) {
+  init(
+    state: TState,
+    work: @escaping (TExtendedState) -> SignalProducer<TWorkResult, NoError>) {
     self.work = work
     super.init(state: state)
   }
 
-  override func toInternalState() -> InternalWorkState<TState, TEvent, TExtendedState, TWorkResult> {
+  override func toInternalState()
+    -> InternalWorkState<TState, TEvent, TExtendedState, TWorkResult> {
     return InternalWorkState(
       state: self.state,
       work: self.work,

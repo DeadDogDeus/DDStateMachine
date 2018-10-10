@@ -38,7 +38,7 @@ class InternalState<TState: Hashable, TEvent: Equatable, TExtendedState: Extende
     return SignalProducer { () -> TState? in
       let destinationState = self.ifConditions
         .first { $0.event == event && $0.action(self.extendedState) }
-        .flatMap { $0.destinationState}
+        .flatMap { $0.destinationState }
 
       return destinationState
     }

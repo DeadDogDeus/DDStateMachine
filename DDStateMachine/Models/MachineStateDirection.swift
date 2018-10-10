@@ -16,7 +16,7 @@ public struct MachineStateDirection<
   where
   TState: Hashable,
   TFromStateBuilder: StateBuilder<TState, TEvent, TExtendedState>,
-TToStateBuilder: StateBuilder<TState, TEvent, TExtendedState> {
+  TToStateBuilder: StateBuilder<TState, TEvent, TExtendedState> {
   let fromStateBuilder: TFromStateBuilder
   let toStateBuilder: TToStateBuilder
 }
