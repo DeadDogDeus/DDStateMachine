@@ -38,16 +38,10 @@ class InternalWorkState<TState: Hashable, TEvent: Equatable, TExtendedState: Ext
   }
 
   private func nextState(from workResult: TWorkResult) -> TState? {
-    var nextState: TState?
+    let destinationState = self.resultConditions
+      .first { $0.action(workResult, self.extendedState) }
+      .flatMap { $0.destinationState}
 
-    for resultCondition in self.resultConditions {
-      if resultCondition.action(workResult, self.extendedState) {
-        nextState = resultCondition.destinationState
-
-        break
-      }
-    }
-
-    return nextState
+    return destinationState
   }
 }

@@ -31,6 +31,7 @@
 		AFC9A3F9213ADD8B008AE7A2 /* ConditionBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9A3F8213ADD8B008AE7A2 /* ConditionBuilder.swift */; };
 		AFC9A3FB213ADDD1008AE7A2 /* EventBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9A3FA213ADDD1008AE7A2 /* EventBuilder.swift */; };
 		AFC9A3FD213ADE13008AE7A2 /* WorkEventBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9A3FC213ADE13008AE7A2 /* WorkEventBuilder.swift */; };
+		AFFB97D4216E8E4400027E20 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFFB97D3216E8E4400027E20 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		AFC9A3F8213ADD8B008AE7A2 /* ConditionBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConditionBuilder.swift; sourceTree = "<group>"; };
 		AFC9A3FA213ADDD1008AE7A2 /* EventBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventBuilder.swift; sourceTree = "<group>"; };
 		AFC9A3FC213ADE13008AE7A2 /* WorkEventBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkEventBuilder.swift; sourceTree = "<group>"; };
+		AFFB97D3216E8E4400027E20 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 		AF18DB172132E59500AE214F /* DDStateMachine */ = {
 			isa = PBXGroup;
 			children = (
+				AFFB97D2216E8E1C00027E20 /* Utilities */,
 				AFC9A3FF213ADE9A008AE7A2 /* Models */,
 				AFC9A3FE213ADE88008AE7A2 /* States */,
 				AFC9A3F3213ADCEC008AE7A2 /* Conditions */,
@@ -187,6 +190,14 @@
 				AFC9A3E6213AD63D008AE7A2 /* MachineWorkStateContainer.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		AFFB97D2216E8E1C00027E20 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				AFFB97D3216E8E4400027E20 /* Extensions.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -343,6 +354,7 @@
 				AFC3DD84216B66B1009687C0 /* OnTransitionAction.swift in Sources */,
 				AFC9A3E3213AD5DE008AE7A2 /* MachineStateDirection.swift in Sources */,
 				AFC9A3E7213AD63D008AE7A2 /* MachineWorkStateContainer.swift in Sources */,
+				AFFB97D4216E8E4400027E20 /* Extensions.swift in Sources */,
 				AFC9A3F9213ADD8B008AE7A2 /* ConditionBuilder.swift in Sources */,
 				AFC9A3FB213ADDD1008AE7A2 /* EventBuilder.swift in Sources */,
 				AF18DB392132EA8200AE214F /* StateMachine.swift in Sources */,

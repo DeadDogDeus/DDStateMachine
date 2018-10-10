@@ -36,17 +36,11 @@ class InternalState<TState: Hashable, TEvent: Equatable, TExtendedState: Extende
 
   func destinationState(by event: TEvent) -> SignalProducer<TState?, NoError> {
     return SignalProducer { () -> TState? in
-      var nextState: TState?
+      let destinationState = self.ifConditions
+        .first { $0.event == event && $0.action(self.extendedState) }
+        .flatMap { $0.destinationState}
 
-      for ifCondition in self.ifConditions where ifCondition.event == event {
-        if ifCondition.action(self.extendedState) {
-          nextState = ifCondition.destinationState
-
-          break
-        }
-      }
-
-      return nextState
+      return destinationState
     }
   }
 }

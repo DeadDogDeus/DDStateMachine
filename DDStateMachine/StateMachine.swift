@@ -45,9 +45,7 @@ public class StateMachine<TState: Hashable, TEvent: Equatable, TExtendedState: E
     self.mutableCurrentState = MutableProperty(currentState)
     self.currentState = Property(self.mutableCurrentState)
 
-    for internalState in internalStates {
-      self.internalStates[internalState.state] = internalState
-    }
+    self.internalStates = internalStates.toDictionary { $0.state }
 
     self.currentInternalState = self.internalStates[currentState]!
   }
