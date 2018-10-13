@@ -56,6 +56,7 @@
 		AF18DB342132E9F900AE214F /* InternalState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalState.swift; sourceTree = "<group>"; };
 		AF18DB362132EA3000AE214F /* StateMachineBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateMachineBuilder.swift; sourceTree = "<group>"; };
 		AF18DB382132EA8200AE214F /* StateMachine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateMachine.swift; sourceTree = "<group>"; };
+		AF230520217267D600CAD089 /* StateMachinePlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = StateMachinePlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		AFC3DD83216B66B1009687C0 /* OnTransitionAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnTransitionAction.swift; sourceTree = "<group>"; };
 		AFC3DD85216B66F8009687C0 /* TransitionCondition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionCondition.swift; sourceTree = "<group>"; };
 		AFC9A3DE213AD557008AE7A2 /* InternalWorkState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalWorkState.swift; sourceTree = "<group>"; };
@@ -99,6 +100,7 @@
 		AF18DB0B2132E59500AE214F = {
 			isa = PBXGroup;
 			children = (
+				AF230520217267D600CAD089 /* StateMachinePlayground.playground */,
 				AF18DB172132E59500AE214F /* DDStateMachine */,
 				AF18DB222132E59500AE214F /* DDStateMachineTests */,
 				AF18DB162132E59500AE214F /* Products */,
