@@ -56,9 +56,9 @@ public class ConditionBuilder<
    */
   public func ifCondition(_ condition: @escaping (TExtendedState) -> Bool) {
     let ifCondition: IfCondition<TState, TEvent, TExtendedState> = IfCondition(
-      self.direction.toStateBuilder.state,
-      event: self.event,
-      action: condition)
+      destinationState: self.direction.toStateBuilder.state,
+      action: condition,
+      event: self.event)
 
     self.stateMachineBuilder.addStates(
       event: self.event,

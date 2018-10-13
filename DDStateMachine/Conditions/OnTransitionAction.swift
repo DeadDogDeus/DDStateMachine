@@ -7,7 +7,7 @@
 
 import Foundation
 
-class OnTransitionAction<TExtendedState: ExtendedStateProtocol> {
+struct OnTransitionAction<TExtendedState: ExtendedStateProtocol> {
   let action: (TExtendedState) -> Void
 
   init(action: @escaping (TExtendedState) -> Void) {

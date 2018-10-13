@@ -100,8 +100,9 @@ public class StateMachineBuilder<TState: Hashable, TEvent: Equatable, TExtendedS
         container.ifConditions.append(contentsOf: conditions)
       } else {
         let ifCondition = IfCondition<TState, TEvent, TExtendedState>(
-          direction.toStateBuilder.state,
-          event: event) { _ in true }
+          destinationState: direction.toStateBuilder.state,
+          action: { _ in true },
+          event: event) 
 
         container.ifConditions.append(ifCondition)
       }

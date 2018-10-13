@@ -7,10 +7,8 @@
 
 import Foundation
 
-class TransitionCondition<TState: Hashable> {
-  let destinationState: TState
+protocol TransitionCondition {
+  associatedtype TState: Hashable
 
-  init(_ destinationState: TState) {
-    self.destinationState = destinationState
-  }
+  var destinationState: TState { get }
 }

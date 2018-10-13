@@ -62,16 +62,14 @@ public class StateMachine<TState: Hashable, TEvent: Equatable, TExtendedState: E
       let stateSignalProducer  = self.currentInternalState.destinationState(by: event)
         .start(on: self.stateScheduler)
 
-      _ = self.applyState(stateSignalProducer)
-        .flatMap(.latest, self.runState).start()
-      }.start(on: self.executeScheduler)
+      _ = self.applyState(stateSignalProducer).flatMap(.latest, self.runState).start()
+    }.start(on: self.executeScheduler)
   }
 
   private func runState() -> SignalProducer<Void, NoError> {
     let stateSignalProducer  = self.currentInternalState.run().start(on: self.stateScheduler)
 
-    return self.applyState(stateSignalProducer)
-      .flatMap(.latest, self.runState)
+    return self.applyState(stateSignalProducer).flatMap(.latest, self.runState)
   }
 
   private func applyState(

@@ -7,15 +7,9 @@
 
 import Foundation
 
-class IfCondition<TState: Hashable, TEvent, TExtendedState: ExtendedStateProtocol>
-  : TransitionCondition<TState> {
+struct IfCondition<TState: Hashable, TEvent, TExtendedState: ExtendedStateProtocol>
+  : TransitionCondition {
+  let destinationState: TState
   let action: (TExtendedState) -> Bool
   let event: TEvent
-
-  init(_ destinationState: TState, event: TEvent, action: @escaping (TExtendedState) -> Bool) {
-    self.event = event
-    self.action = action
-
-    super.init(destinationState)
-  }
 }
