@@ -22,7 +22,7 @@ public class WorkEventBuilder<
   typealias TStateBuilder = StateBuilder<TState, TEvent, TExtendedState>
   typealias TResultCondition = ResultCondition<TState, TEvent, TExtendedState, TWorkResult>
   typealias TWorkStateDirection =
-    MachineStateDirection<TState, TEvent, TExtendedState, TWorkStateBuilder, TStateBuilder>
+    StateDirection<TState, TEvent, TExtendedState, TWorkStateBuilder, TStateBuilder>
 
   private let direction: TWorkStateDirection
   private let stateMachineBuilder: StateMachineBuilder<TState, TEvent, TExtendedState>

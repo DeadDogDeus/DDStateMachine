@@ -21,7 +21,7 @@ TWorkResult>: StateBuilder<TState, TEvent, TExtendedState> {
   public typealias TWorkStateBuilder = WorkStateBuilder<TState, TEvent, TExtendedState, TWorkResult>
   public typealias TStateBuilder = StateBuilder<TState, TEvent, TExtendedState>
   public typealias TWorkStateDirection =
-    MachineStateDirection<TState, TEvent, TExtendedState, TWorkStateBuilder, TStateBuilder>
+    StateDirection<TState, TEvent, TExtendedState, TWorkStateBuilder, TStateBuilder>
   typealias Work = (TExtendedState) -> SignalProducer<TWorkResult, NoError>
 
   let work: Work
@@ -46,6 +46,6 @@ TWorkResult>: StateBuilder<TState, TEvent, TExtendedState> {
   public static func ~> (
     fromStateBuilder: TWorkStateBuilder,
     toStateBuilder: TStateBuilder) -> TWorkStateDirection {
-    return MachineStateDirection(fromStateBuilder: fromStateBuilder, toStateBuilder: toStateBuilder)
+    return StateDirection(fromStateBuilder: fromStateBuilder, toStateBuilder: toStateBuilder)
   }
 }

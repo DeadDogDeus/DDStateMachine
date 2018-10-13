@@ -32,8 +32,8 @@ public class StateBuilder<TState: Hashable, TEvent: Equatable, TExtendedState: E
   public static func ~> (
     fromStateBuilder: StateBuilder,
     toStateBuilder: StateBuilder)
-    -> MachineStateDirection<TState, TEvent, TExtendedState, StateBuilder, StateBuilder> {
-    return MachineStateDirection(
+    -> StateDirection<TState, TEvent, TExtendedState, StateBuilder, StateBuilder> {
+    return StateDirection(
       fromStateBuilder: fromStateBuilder,
       toStateBuilder: toStateBuilder)
   }

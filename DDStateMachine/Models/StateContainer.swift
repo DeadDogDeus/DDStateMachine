@@ -1,5 +1,5 @@
 //
-//  MachineStateContainer.swift
+//  StateContainer.swift
 //  DDStateMachine
 //
 //  Created by Alexander Bondarenko on 9/1/18.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-class MachineStateContainer<TState: Hashable, TEvent: Equatable, TExtendedState: ExtendedStateProtocol> {
+class StateContainer<TState: Hashable, TEvent: Equatable, TExtendedState: ExtendedStateProtocol> {
   let state: TState
 
   var onTransitionActions = [OnTransitionAction<TExtendedState>]()

@@ -16,7 +16,7 @@ public class EventBuilder<
   TEvent: Equatable,
   TExtendedState: ExtendedStateProtocol> {
   typealias TStateBuilder = StateBuilder<TState, TEvent, TExtendedState>
-  typealias TStateDirection = MachineStateDirection<TState, TEvent, TExtendedState, TStateBuilder, TStateBuilder>
+  typealias TStateDirection = StateDirection<TState, TEvent, TExtendedState, TStateBuilder, TStateBuilder>
 
   private let direction: TStateDirection
   private let stateMachineBuilder: StateMachineBuilder<TState, TEvent, TExtendedState>

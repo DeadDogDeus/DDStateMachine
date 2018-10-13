@@ -1,5 +1,5 @@
 //
-//  MachineWorkStateContainer.swift
+//  WorkStateContainer.swift
 //  DDStateMachine
 //
 //  Created by Alexander Bondarenko on 9/1/18.
@@ -9,11 +9,11 @@ import Foundation
 import ReactiveSwift
 import Result
 
-class MachineWorkStateContainer<
+class WorkStateContainer<
   TState: Hashable,
   TEvent: Equatable,
   TExtendedState: ExtendedStateProtocol,
-  TWorkResult> : MachineStateContainer<TState, TEvent, TExtendedState> {
+  TWorkResult> : StateContainer<TState, TEvent, TExtendedState> {
   var resultConditions = [ResultCondition<TState, TEvent, TExtendedState, TWorkResult>]()
   let work: (TExtendedState) -> SignalProducer<TWorkResult, NoError>
 

@@ -16,11 +16,11 @@ import Result
 public class StateMachineBuilder<TState: Hashable, TEvent: Equatable, TExtendedState: ExtendedStateProtocol> {
   public typealias TStateBuilder = StateBuilder<TState, TEvent, TExtendedState>
   public typealias TWorkStateBuilder<TWorkResult> = WorkStateBuilder<TState, TEvent, TExtendedState, TWorkResult>
-  public typealias TStateDirection = MachineStateDirection<TState, TEvent, TExtendedState, TStateBuilder, TStateBuilder>
+  public typealias TStateDirection = StateDirection<TState, TEvent, TExtendedState, TStateBuilder, TStateBuilder>
   public typealias TWorkStateDirection<TWorkResult> =
-    MachineStateDirection<TState, TEvent, TExtendedState, TWorkStateBuilder<TWorkResult>, TStateBuilder>
-  typealias TStateContainer = MachineStateContainer<TState, TEvent, TExtendedState>
-  typealias TWorkStateContainer<TWorkResult> = MachineWorkStateContainer<TState, TEvent, TExtendedState, TWorkResult>
+    StateDirection<TState, TEvent, TExtendedState, TWorkStateBuilder<TWorkResult>, TStateBuilder>
+  typealias TStateContainer = StateContainer<TState, TEvent, TExtendedState>
+  typealias TWorkStateContainer<TWorkResult> = WorkStateContainer<TState, TEvent, TExtendedState, TWorkResult>
   typealias TResultCondition<TWorkResult> = ResultCondition<TState, TEvent, TExtendedState, TWorkResult>
   public typealias Work<TWorkResult> = (TExtendedState) -> SignalProducer<TWorkResult, NoError>
 
@@ -102,7 +102,7 @@ public class StateMachineBuilder<TState: Hashable, TEvent: Equatable, TExtendedS
         let ifCondition = IfCondition<TState, TEvent, TExtendedState>(
           destinationState: direction.toStateBuilder.state,
           action: { _ in true },
-          event: event) 
+          event: event)
 
         container.ifConditions.append(ifCondition)
       }
@@ -161,7 +161,7 @@ public class StateMachineBuilder<TState: Hashable, TEvent: Equatable, TExtendedS
   }
 
   private func stateContainer(for state: TState) -> TStateContainer {
-    return self.statesContainers[state] ?? MachineStateContainer(state: state)
+    return self.statesContainers[state] ?? StateContainer(state: state)
   }
 
   private func workStateContainer<TWorkResult>(

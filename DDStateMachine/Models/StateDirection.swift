@@ -1,5 +1,5 @@
 //
-//  MachineStateDirection.swift
+//  StateDirection.swift
 //  DDStateMachine
 //
 //  Created by Alexander Bondarenko on 9/1/18.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct MachineStateDirection<
+public struct StateDirection<
   TState: Hashable,
   TEvent: Equatable,
   TExtendedState: ExtendedStateProtocol,

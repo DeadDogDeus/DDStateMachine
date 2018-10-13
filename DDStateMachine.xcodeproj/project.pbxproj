@@ -19,9 +19,9 @@
 		AFC3DD86216B66F8009687C0 /* TransitionCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC3DD85216B66F8009687C0 /* TransitionCondition.swift */; };
 		AFC9A3DF213AD557008AE7A2 /* InternalWorkState.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9A3DE213AD557008AE7A2 /* InternalWorkState.swift */; };
 		AFC9A3E1213AD5A1008AE7A2 /* ExtendedStateProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9A3E0213AD5A1008AE7A2 /* ExtendedStateProtocol.swift */; };
-		AFC9A3E3213AD5DE008AE7A2 /* MachineStateDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9A3E2213AD5DE008AE7A2 /* MachineStateDirection.swift */; };
-		AFC9A3E5213AD612008AE7A2 /* MachineStateContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9A3E4213AD612008AE7A2 /* MachineStateContainer.swift */; };
-		AFC9A3E7213AD63D008AE7A2 /* MachineWorkStateContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9A3E6213AD63D008AE7A2 /* MachineWorkStateContainer.swift */; };
+		AFC9A3E3213AD5DE008AE7A2 /* StateDirection.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9A3E2213AD5DE008AE7A2 /* StateDirection.swift */; };
+		AFC9A3E5213AD612008AE7A2 /* StateContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9A3E4213AD612008AE7A2 /* StateContainer.swift */; };
+		AFC9A3E7213AD63D008AE7A2 /* WorkStateContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9A3E6213AD63D008AE7A2 /* WorkStateContainer.swift */; };
 		AFC9A3E9213AD669008AE7A2 /* IfCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9A3E8213AD669008AE7A2 /* IfCondition.swift */; };
 		AFC9A3ED213AD6B7008AE7A2 /* ResultCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC9A3EC213AD6B7008AE7A2 /* ResultCondition.swift */; };
 		AFC9A3EE213AD70A008AE7A2 /* ReactiveSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AF18DB302132E97B00AE214F /* ReactiveSwift.framework */; };
@@ -60,9 +60,9 @@
 		AFC3DD85216B66F8009687C0 /* TransitionCondition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransitionCondition.swift; sourceTree = "<group>"; };
 		AFC9A3DE213AD557008AE7A2 /* InternalWorkState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalWorkState.swift; sourceTree = "<group>"; };
 		AFC9A3E0213AD5A1008AE7A2 /* ExtendedStateProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtendedStateProtocol.swift; sourceTree = "<group>"; };
-		AFC9A3E2213AD5DE008AE7A2 /* MachineStateDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineStateDirection.swift; sourceTree = "<group>"; };
-		AFC9A3E4213AD612008AE7A2 /* MachineStateContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineStateContainer.swift; sourceTree = "<group>"; };
-		AFC9A3E6213AD63D008AE7A2 /* MachineWorkStateContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MachineWorkStateContainer.swift; sourceTree = "<group>"; };
+		AFC9A3E2213AD5DE008AE7A2 /* StateDirection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateDirection.swift; sourceTree = "<group>"; };
+		AFC9A3E4213AD612008AE7A2 /* StateContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateContainer.swift; sourceTree = "<group>"; };
+		AFC9A3E6213AD63D008AE7A2 /* WorkStateContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkStateContainer.swift; sourceTree = "<group>"; };
 		AFC9A3E8213AD669008AE7A2 /* IfCondition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IfCondition.swift; sourceTree = "<group>"; };
 		AFC9A3EC213AD6B7008AE7A2 /* ResultCondition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultCondition.swift; sourceTree = "<group>"; };
 		AFC9A3F4213ADD0F008AE7A2 /* StateBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateBuilder.swift; sourceTree = "<group>"; };
@@ -185,9 +185,9 @@
 			isa = PBXGroup;
 			children = (
 				AFC9A3E0213AD5A1008AE7A2 /* ExtendedStateProtocol.swift */,
-				AFC9A3E2213AD5DE008AE7A2 /* MachineStateDirection.swift */,
-				AFC9A3E4213AD612008AE7A2 /* MachineStateContainer.swift */,
-				AFC9A3E6213AD63D008AE7A2 /* MachineWorkStateContainer.swift */,
+				AFC9A3E2213AD5DE008AE7A2 /* StateDirection.swift */,
+				AFC9A3E4213AD612008AE7A2 /* StateContainer.swift */,
+				AFC9A3E6213AD63D008AE7A2 /* WorkStateContainer.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -352,8 +352,8 @@
 				AF18DB352132E9F900AE214F /* InternalState.swift in Sources */,
 				AFC9A3F7213ADD3F008AE7A2 /* WorkStateBuilder.swift in Sources */,
 				AFC3DD84216B66B1009687C0 /* OnTransitionAction.swift in Sources */,
-				AFC9A3E3213AD5DE008AE7A2 /* MachineStateDirection.swift in Sources */,
-				AFC9A3E7213AD63D008AE7A2 /* MachineWorkStateContainer.swift in Sources */,
+				AFC9A3E3213AD5DE008AE7A2 /* StateDirection.swift in Sources */,
+				AFC9A3E7213AD63D008AE7A2 /* WorkStateContainer.swift in Sources */,
 				AFFB97D4216E8E4400027E20 /* Extensions.swift in Sources */,
 				AFC9A3F9213ADD8B008AE7A2 /* ConditionBuilder.swift in Sources */,
 				AFC9A3FB213ADDD1008AE7A2 /* EventBuilder.swift in Sources */,
@@ -361,7 +361,7 @@
 				AFC3DD86216B66F8009687C0 /* TransitionCondition.swift in Sources */,
 				AFC9A3DF213AD557008AE7A2 /* InternalWorkState.swift in Sources */,
 				AFC9A3E1213AD5A1008AE7A2 /* ExtendedStateProtocol.swift in Sources */,
-				AFC9A3E5213AD612008AE7A2 /* MachineStateContainer.swift in Sources */,
+				AFC9A3E5213AD612008AE7A2 /* StateContainer.swift in Sources */,
 				AFC9A3FD213ADE13008AE7A2 /* WorkEventBuilder.swift in Sources */,
 				AF18DB372132EA3000AE214F /* StateMachineBuilder.swift in Sources */,
 				AFC9A3ED213AD6B7008AE7A2 /* ResultCondition.swift in Sources */,
